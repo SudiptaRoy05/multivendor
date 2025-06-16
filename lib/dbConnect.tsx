@@ -57,13 +57,13 @@ export default async function dbConnect<
                 strict: true,
                 deprecationErrors: true,
             },
-            maxPoolSize: 10, // Maintain up to 10 socket connections
-            serverSelectionTimeoutMS: options.timeout, // Keep trying to send operations for this long
-            socketTimeoutMS: 45000, // Close sockets after 45 seconds of inactivity
-            connectTimeoutMS: 10000, // Give up initial connection after 10 seconds
-            family: 4, // Use IPv4, skip trying IPv6
-            maxIdleTimeMS: 30000, // Close connections after 30 seconds of inactivity
-            retryWrites: true, // Retry writes on network errors
+            maxPoolSize: 10, 
+            serverSelectionTimeoutMS: options.timeout,
+            socketTimeoutMS: 45000, 
+            connectTimeoutMS: 10000,
+            family: 4, 
+            maxIdleTimeMS: 30000,
+            retryWrites: true, 
         };
 
         let retries = options.retries || 3;
