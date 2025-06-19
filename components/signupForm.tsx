@@ -7,6 +7,8 @@ import { Label } from "@/components/ui/label"
 import { Alert, AlertDescription } from "@/components/ui/alert"
 import { Eye, EyeOff, Loader2 } from "lucide-react"
 import registerUser from "@/app/action/auth/registerUser"
+import SocialLogin from "./SocialLogin"
+import toast from "react-hot-toast"
 
 const SignUp = () => {
     const [formData, setFormData] = useState({
@@ -25,12 +27,12 @@ const SignUp = () => {
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const { id, value } = e.target;
         setFormData(prev => ({ ...prev, [id]: value }));
-        
+
         // Clear field-specific error when user starts typing
         if (fieldErrors[id]) {
             setFieldErrors(prev => ({ ...prev, [id]: "" }));
         }
-        
+
         // Clear general error
         if (error) setError("")
         if (success) setSuccess("")
@@ -38,14 +40,14 @@ const SignUp = () => {
 
     const validateForm = (): boolean => {
         const errors: Record<string, string> = {}
-        
+
         // Name validation
         if (!formData.name.trim()) {
             errors.name = "Name is required"
         } else if (formData.name.trim().length < 2) {
             errors.name = "Name must be at least 2 characters long"
         }
-        
+
         // Email validation
         const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
         if (!formData.email.trim()) {
@@ -53,7 +55,7 @@ const SignUp = () => {
         } else if (!emailPattern.test(formData.email)) {
             errors.email = "Please enter a valid email address"
         }
-        
+
         // Password validation
         const passwordPattern = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[^a-zA-Z0-9]).{6,}$/
         if (!formData.password) {
@@ -61,14 +63,14 @@ const SignUp = () => {
         } else if (!passwordPattern.test(formData.password)) {
             errors.password = "Password must be at least 6 characters with 1 uppercase, 1 lowercase, and 1 special character"
         }
-        
+
         // Confirm password validation
         if (!formData.confirmPassword) {
             errors.confirmPassword = "Please confirm your password"
         } else if (formData.password !== formData.confirmPassword) {
             errors.confirmPassword = "Passwords do not match"
         }
-        
+
         setFieldErrors(errors)
         return Object.keys(errors).length === 0
     }
@@ -77,18 +79,19 @@ const SignUp = () => {
         e.preventDefault()
         setError("")
         setSuccess("")
-        
+
         if (!validateForm()) {
             return
         }
-        
+
         setLoading(true)
-        
+
         try {
             const result = await registerUser(formData);
-            
+
             if (result?.success) {
                 setSuccess("Account created successfully! You can now log in.")
+                toast.success("Account created successfully! You can now log in.")
                 setFormData({
                     name: "",
                     email: "",
@@ -99,10 +102,12 @@ const SignUp = () => {
                 // setTimeout(() => router.push('/login'), 2000)
             } else {
                 setError(result?.message || "Failed to create account. Please try again.")
+                toast.error("Failed to create account. Please try again.")
             }
         } catch (error) {
             console.error("Registration error:", error);
             setError("An unexpected error occurred. Please try again.");
+            toast.error("An unexpected error occurred. Please try again.")
         } finally {
             setLoading(false)
         }
@@ -115,7 +120,7 @@ const SignUp = () => {
                     <h2 className="text-3xl font-bold text-primary">Create an Account</h2>
                     <p className="text-muted-foreground mt-2">Enter your details to get started</p>
                 </div>
-                
+
                 <form className="space-y-4" onSubmit={handleSubmit} noValidate>
                     <div className="space-y-2">
                         <Label htmlFor="name">
@@ -135,7 +140,7 @@ const SignUp = () => {
                             <p className="text-sm text-red-500">{fieldErrors.name}</p>
                         )}
                     </div>
-                    
+
                     <div className="space-y-2">
                         <Label htmlFor="email">
                             Email <span className="text-red-600">*</span>
@@ -154,7 +159,7 @@ const SignUp = () => {
                             <p className="text-sm text-red-500">{fieldErrors.email}</p>
                         )}
                     </div>
-                    
+
                     <div className="space-y-2">
                         <Label htmlFor="password">
                             Password <span className="text-red-600">*</span>
@@ -183,7 +188,7 @@ const SignUp = () => {
                             <p className="text-sm text-red-500">{fieldErrors.password}</p>
                         )}
                     </div>
-                    
+
                     <div className="space-y-2">
                         <Label htmlFor="confirmPassword">
                             Confirm Password <span className="text-red-600">*</span>
@@ -218,7 +223,7 @@ const SignUp = () => {
                             <AlertDescription>{error}</AlertDescription>
                         </Alert>
                     )}
-                    
+
                     {success && (
                         <Alert className="border-green-200 bg-green-50 text-green-800">
                             <AlertDescription>{success}</AlertDescription>
@@ -236,7 +241,16 @@ const SignUp = () => {
                         )}
                     </Button>
                 </form>
-                
+                <div className="relative">
+                    <div className="absolute inset-0 flex items-center">
+                        <div className="w-full border-t" />
+                    </div>
+                    <div className="relative flex justify-center text-xs uppercase">
+                        <span className="bg-background px-2 text-muted-foreground">or</span>
+                    </div>
+                </div>
+                <SocialLogin />
+
                 <p className="text-sm text-muted-foreground text-center">
                     Already have an account?{" "}
                     <a href="/login" className="text-primary underline hover:text-primary/80">

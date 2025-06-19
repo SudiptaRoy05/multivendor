@@ -13,9 +13,8 @@ let cachedClient: MongoClient | null = globalThis.mongoClient || null;
 
 export const collectionNameObj = {
     userCollection: "users",
-    // Add more collections as needed
-    // productsCollection: "products",
-    // ordersCollection: "orders",
+    shopCollection: "shops"
+
 } as const;
 
 export type CollectionName = typeof collectionNameObj[keyof typeof collectionNameObj];
@@ -57,13 +56,13 @@ export default async function dbConnect<
                 strict: true,
                 deprecationErrors: true,
             },
-            maxPoolSize: 10, 
+            maxPoolSize: 10,
             serverSelectionTimeoutMS: options.timeout,
-            socketTimeoutMS: 45000, 
+            socketTimeoutMS: 45000,
             connectTimeoutMS: 10000,
-            family: 4, 
+            family: 4,
             maxIdleTimeMS: 30000,
-            retryWrites: true, 
+            retryWrites: true,
         };
 
         let retries = options.retries || 3;

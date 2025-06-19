@@ -5,11 +5,17 @@ import { useState, FormEvent } from "react"
 import { Input } from "@/components/ui/input"
 import { Button } from "@/components/ui/button"
 import { Label } from "@/components/ui/label"
-import { FcGoogle } from "react-icons/fc"
+import { useRouter } from "next/navigation"
+import toast from "react-hot-toast"
+import { Eye, EyeOff } from "lucide-react"
+import SocialLogin from "./SocialLogin"
 
 const LoginForm = () => {
     const [email, setEmail] = useState("")
     const [password, setPassword] = useState("")
+    const [isLoading, setIsLoading] = useState(false)
+    const [showPassword, setShowPassword] = useState(false)
+    const router = useRouter();
 
     const handleSubmit = async (e: FormEvent) => {
         e.preventDefault()
@@ -18,14 +24,42 @@ const LoginForm = () => {
             alert("Please enter both email and password.")
             return
         }
-        await signIn("credentials", { email, password })
 
+        setIsLoading(true)
+
+        try {
+            const result = await signIn("credentials", {
+                email,
+                password,
+                callbackUrl: '/',
+                redirect: false,
+            })
+
+            if (result?.error) {
+                // Handle authentication error
+                toast.error("Invalid credentials. Please try again.")
+                // console.error("Login error:", result.error)
+            } else if (result?.ok) {
+                router.push('/')
+                router.refresh()
+                toast.success("Login successfully");
+            }
+        } catch (error) {
+            console.error("Login error:", error)
+            alert("An error occurred. Please try again.")
+        } finally {
+            setIsLoading(false)
+        }
     }
 
-    const handleGoogleLogin = () => {
-        // Replace with real Google OAuth logic
-        console.log("Google login clicked")
-        alert("Google login clicked")
+    const handleGoogleLogin = async () => {
+        try {
+            await signIn("google", {
+                callbackUrl: "/" // This will redirect to home after Google login
+            })
+        } catch (error) {
+            console.error("Google login error:", error)
+        }
     }
 
     return (
@@ -44,22 +78,35 @@ const LoginForm = () => {
                             placeholder="you@example.com"
                             value={email}
                             onChange={(e) => setEmail(e.target.value)}
+                            disabled={isLoading}
                         />
                     </div>
                     <div>
                         <Label htmlFor="password">Password</Label>
-                        <Input
-                            id="password"
-                            name="password"
-                            type="password"
-                            autoComplete="current-password"
-                            placeholder="••••••••"
-                            value={password}
-                            onChange={(e) => setPassword(e.target.value)}
-                        />
+                        <div className="relative">
+                            <Input
+                                id="password"
+                                name="password"
+                                type={showPassword ? "text" : "password"}
+                                autoComplete="current-password"
+                                placeholder="••••••••"
+                                value={password}
+                                onChange={(e) => setPassword(e.target.value)}
+                                disabled={isLoading}
+                                className="pr-10"
+                            />
+                            <button
+                                type="button"
+                                onClick={() => setShowPassword(!showPassword)}
+                                className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-500 hover:text-gray-700"
+                                disabled={isLoading}
+                            >
+                                {showPassword ? <EyeOff size={16} /> : <Eye size={16} />}
+                            </button>
+                        </div>
                     </div>
-                    <Button type="submit" className="w-full">
-                        Login
+                    <Button type="submit" className="w-full" disabled={isLoading}>
+                        {isLoading ? "Logging in..." : "Login"}
                     </Button>
                 </form>
 
@@ -71,16 +118,7 @@ const LoginForm = () => {
                         <span className="bg-background px-2 text-muted-foreground">or</span>
                     </div>
                 </div>
-
-                <Button
-                    type="button"
-                    variant="outline"
-                    className="w-full flex items-center justify-center gap-2"
-                    onClick={handleGoogleLogin}
-                >
-                    <FcGoogle className="h-5 w-5" />
-                    Login with Google
-                </Button>
+                <SocialLogin></SocialLogin>
             </div>
         </div>
     )
