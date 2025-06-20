@@ -1,5 +1,5 @@
 import React from 'react';
-import { Package, Heart, Truck, Gift, Check, Plus, ShoppingCart, Star, Tag } from 'lucide-react';
+import { Package, Heart, Truck, Gift, Check, Star, Tag } from 'lucide-react';
 
 export default function UserOverview() {
     const stats = [

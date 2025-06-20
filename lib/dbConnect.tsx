@@ -44,6 +44,7 @@ export default async function dbConnect<
             // Ping the database to check if connection is alive
             await cachedClient.db(dbName).admin().ping();
         } catch (error) {
+            console.log(error)
             console.warn("Cached MongoDB connection is stale, reconnecting...");
             cachedClient = null;
             globalThis.mongoClient = null;
