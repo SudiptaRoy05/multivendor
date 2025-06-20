@@ -6,6 +6,7 @@ import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuSepara
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import { ModeToggle } from "./toggle-btn"
 import { auth, signOut } from "@/auth"
+import NavLink from "./NavLink"
 
 const Navbar = async () => {
     const session = await auth();
@@ -29,19 +30,7 @@ const Navbar = async () => {
                 </Link>
 
                 {/* Desktop Nav */}
-                <ul className="hidden space-x-6 text-sm font-medium md:flex">
-                    <li>
-                        <Link href="#" className="transition hover:text-primary">Item 1</Link>
-                    </li>
-                    <li className="relative group">
-                        <span className="cursor-pointer transition hover:text-primary">Parent</span>
-                        <ul className="absolute hidden w-40 rounded-md bg-popover p-2 shadow group-hover:block">
-                            <li><Link href="#" className="block rounded px-2 py-1 hover:bg-accent">Submenu 1</Link></li>
-                            <li><Link href="#" className="block rounded px-2 py-1 hover:bg-accent">Submenu 2</Link></li>
-                        </ul>
-                    </li>
-                    <li><Link href="#" className="transition hover:text-primary">Item 3</Link></li>
-                </ul>
+                <NavLink />
 
                 {/* Right side (Toggle & Auth) */}
                 <div className="flex items-center space-x-2">
@@ -128,16 +117,7 @@ const Navbar = async () => {
                                 <Link href="/" className="text-2xl font-bold tracking-tight text-primary">
                                     MultiV
                                 </Link>
-                                <Link href="#" className="text-sm font-medium">Item 1</Link>
-                                <div>
-                                    <p className="text-sm font-medium">Parent</p>
-                                    <div className="ml-4 mt-2 space-y-2">
-                                        <Link href="#" className="block text-sm">Submenu 1</Link>
-                                        <Link href="#" className="block text-sm">Submenu 2</Link>
-                                    </div>
-                                </div>
-                                <Link href="#" className="text-sm font-medium">Item 3</Link>
-
+                                <NavLink />
                                 {/* Mobile Auth Section */}
                                 <div className="border-t pt-4 w-full">
                                     {session?.user ? (
@@ -153,9 +133,9 @@ const Navbar = async () => {
                                                 <p className="text-sm text-muted-foreground">{session.user.email}</p>
                                             </div>
                                             <Link href="/dashboard" className="cursor-pointer">
-                                            <User className="mr-2 h-4 w-4" />
-                                            Dashboard
-                                        </Link>
+                                                <User className="mr-2 h-4 w-4" />
+                                                Dashboard
+                                            </Link>
                                             <form
                                                 action={async () => {
                                                     "use server"

@@ -1,9 +1,12 @@
+import Hero from "@/components/hero";
+import AllProduct from "./allproduct/page";
+import FeatureProduct from "./allproduct/page";
 
 export default function Home() {
   return (
-   <>
-   
-    <h1>Home</h1>
-   </>
+    <>
+      <Hero />
+      <FeatureProduct />
+    </>
   );
 }
