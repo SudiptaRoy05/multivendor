@@ -9,7 +9,7 @@ import { useRouter } from "next/navigation"
 import toast from "react-hot-toast"
 import { Eye, EyeOff } from "lucide-react"
 import SocialLogin from "./SocialLogin"
-import getUser from "@/app/action/auth/getUser"
+
 
 const LoginForm = () => {
     const [email, setEmail] = useState("")
@@ -55,15 +55,15 @@ const LoginForm = () => {
    
 
 
-    const handleGoogleLogin = async () => {
-        try {
-            await signIn("google", {
-                callbackUrl: "/" // This will redirect to home after Google login
-            })
-        } catch (error) {
-            console.error("Google login error:", error)
-        }
-    }
+    // const handleGoogleLogin = async () => {
+    //     try {
+    //         await signIn("google", {
+    //             callbackUrl: "/" // This will redirect to home after Google login
+    //         })
+    //     } catch (error) {
+    //         console.error("Google login error:", error)
+    //     }
+    // }
 
     return (
         <div className="min-h-screen flex items-center justify-center px-4 bg-background">

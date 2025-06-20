@@ -1,7 +1,8 @@
 'use server';
 
+import { auth } from "@/lib/auth";
 import dbConnect from "@/lib/dbConnect";
-import { auth } from "@/auth";
+
 import { ObjectId, WithId } from "mongodb";
 
 export type UserType = {

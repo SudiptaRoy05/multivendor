@@ -7,6 +7,7 @@ import toast from "react-hot-toast";
 import imageUpload from "@/app/action/auth/imageUpload";
 import { useShop } from "@/app/action/auth/shopContext";
 import addProduct from "@/app/action/auth/addProduct";
+import Image from "next/image";
 
 interface PricingData {
   price: string;
@@ -24,12 +25,12 @@ interface FormData {
 
 export default function AddProductForm() {
   const { selectedShop } = useShop();
-
   const [imageUrl, setImageUrl] = useState<string>("");
   const [dragActive, setDragActive] = useState<boolean>(false);
   const [selectedImage, setSelectedImage] = useState<File | null>(null);
   const [uploading, setUploading] = useState<boolean>(false);
-
+  setDragActive(false);
+  
   const [formData, setFormData] = useState<FormData>({
     name: "",
     description: "",
@@ -134,21 +135,21 @@ export default function AddProductForm() {
     }
 
     const productData = {
-    name: formData.name,
-    description: formData.description,
-    category: formData.category,
-    imageUrl: imageUrl,
-    price: Number(formData.pricing.price), 
-    quantity: Number(formData.pricing.quantity),
-    salePrice: formData.pricing.salePrice ? Number(formData.pricing.salePrice) : undefined,
-    sku: formData.pricing.sku,
-    shopId: selectedShop._id,
-  };
+      name: formData.name,
+      description: formData.description,
+      category: formData.category,
+      imageUrl: imageUrl,
+      price: Number(formData.pricing.price),
+      quantity: Number(formData.pricing.quantity),
+      salePrice: formData.pricing.salePrice ? Number(formData.pricing.salePrice) : undefined,
+      sku: formData.pricing.sku,
+      shopId: selectedShop._id,
+    };
 
     try {
       await addProduct({ product: productData });
       toast.success("Product added successfully!");
-      
+
       // Reset form
       setFormData({
         name: "",
@@ -283,25 +284,22 @@ export default function AddProductForm() {
           <div className="flex flex-col items-center justify-center py-12 px-6 text-center border rounded">
             <label className="cursor-pointer group">
               <div
-                className={`w-24 h-24 rounded-2xl flex flex-col items-center justify-center mb-4 border-2 transition-all duration-300 ${
-                  dragActive
-                    ? "bg-red-50 border-red-400 border-dashed"
-                    : "bg-gray-50 border-dashed border-gray-300 group-hover:border-gray-500"
-                }`}
+                className={`w-24 h-24 rounded-2xl flex flex-col items-center justify-center mb-4 border-2 transition-all duration-300 ${dragActive
+                  ? "bg-red-50 border-red-400 border-dashed"
+                  : "bg-gray-50 border-dashed border-gray-300 group-hover:border-gray-500"
+                  }`}
               >
                 <Upload
-                  className={`w-10 h-10 transition-colors duration-300 mb-2 ${
-                    dragActive
-                      ? "text-red-500"
-                      : "text-gray-500 group-hover:text-gray-700"
-                  }`}
+                  className={`w-10 h-10 transition-colors duration-300 mb-2 ${dragActive
+                    ? "text-red-500"
+                    : "text-gray-500 group-hover:text-gray-700"
+                    }`}
                 />
                 <span
-                  className={`text-sm ${
-                    dragActive
-                      ? "text-red-500"
-                      : "text-gray-500 group-hover:text-gray-700"
-                  }`}
+                  className={`text-sm ${dragActive
+                    ? "text-red-500"
+                    : "text-gray-500 group-hover:text-gray-700"
+                    }`}
                 >
                   {dragActive ? "Drop to upload" : "Upload image"}
                 </span>
@@ -335,7 +333,8 @@ export default function AddProductForm() {
 
               {imageUrl && (
                 <div className="mt-6 p-2 border-2 border-dashed border-gray-200 rounded-lg">
-                  <img
+                  <Image
+                    fill
                     src={imageUrl}
                     alt="Uploaded Product"
                     className="mx-auto rounded-md max-h-48 object-contain"

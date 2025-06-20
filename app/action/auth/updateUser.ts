@@ -1,5 +1,6 @@
 'use server'
-import { auth } from "@/auth";
+
+import { auth } from "@/lib/auth";
 import dbConnect, { collectionNameObj } from "@/lib/dbConnect";
 import { ObjectId } from "mongodb";
 
@@ -21,7 +22,7 @@ export default async function updateUser({ role }: { role: UserType["role"] }) {
 
     const userCollection = await dbConnect<UserType>(collectionNameObj.userCollection);
 
-    const user = await userCollection.findOne({ email });
+    await userCollection.findOne({ email });
 
 
     const result = await userCollection.updateOne(

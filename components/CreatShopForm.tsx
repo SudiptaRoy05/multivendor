@@ -18,6 +18,7 @@ import imageUpload from "@/app/action/auth/imageUpload"
 import createShop from "@/app/action/auth/createShop"
 import updateUser from "@/app/action/auth/updateUser"
 import { useRouter } from "next/navigation"
+import Image from "next/image"
 
 type ShopCategory = "Electronics" | "Fashion" | "Home" | "Books" | "Sports" | "Beauty"
 
@@ -239,7 +240,8 @@ export default function CreateShopForm({ user }: { user: User }) {
                                 )}
 
                                 {imageUrl && (
-                                    <img
+                                    <Image
+                                        fill
                                         src={imageUrl}
                                         alt="Uploaded Shop"
                                         className="mt-4 mx-auto rounded-lg max-h-48 object-contain"

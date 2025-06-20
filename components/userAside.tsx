@@ -5,10 +5,8 @@ import {
   Package,
   ShoppingCart,
   CreditCard,
-  Settings,
   Store,
   User,
-  SlidersHorizontal,
 } from "lucide-react";
 import Link from "next/link";
 

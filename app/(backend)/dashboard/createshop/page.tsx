@@ -1,8 +1,9 @@
-import { auth } from "@/auth"
+
 import CreateShopForm from "@/components/CreatShopForm"
+import { auth } from "@/lib/auth"
 
 const CreateShop = async () => {
-    const session = await auth()  
+    const session = await auth()
 
     if (!session || !session.user) {
         return <p>Please login to create a shop</p>

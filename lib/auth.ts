@@ -1,6 +1,7 @@
 import CredentialsProvider from "next-auth/providers/credentials"
 import NextAuth from "next-auth"
-import { loginUser } from "./app/action/auth/loginUser"
+import { loginUser } from "@/app/action/auth/loginUser"
+
 
 export const { handlers, signIn, signOut, auth } = NextAuth({
     providers: [

@@ -14,6 +14,7 @@ import Link from "next/link";
 import { useShop } from "@/app/action/auth/shopContext";
 import getProduct from "@/app/action/auth/getProduct";
 import toast from "react-hot-toast";
+import Image from "next/image";
 
 interface Product {
     _id: string; // Plain string, not ObjectId
@@ -133,7 +134,8 @@ export default function ProductsPage() {
                                 <TableRow key={product._id}>
                                     <TableCell>
                                         {product.imageUrl ? (
-                                            <img
+                                            <Image
+                                                fill
                                                 src={product.imageUrl}
                                                 alt={product.name}
                                                 className="w-12 h-12 object-cover rounded"
