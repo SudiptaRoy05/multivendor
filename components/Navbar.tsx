@@ -6,10 +6,11 @@ import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuSepara
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import { ModeToggle } from "./toggle-btn"
 import NavLink from "./NavLink"
-import {  auth, signIn, signOut } from "@/lib/auth"
+import { auth, signIn, signOut } from "@/app/api/auth/[...nextauth]/route"
+
 
 const Navbar = async () => {
-    const session = await auth();
+    const session = await auth()
     console.log(session?.user)
 
     // Get user initials for avatar fallback

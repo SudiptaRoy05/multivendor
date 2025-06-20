@@ -1,6 +1,6 @@
 
+import { auth } from "@/app/api/auth/[...nextauth]/route"
 import CreateShopForm from "@/components/CreatShopForm"
-import { auth } from "@/lib/auth"
 
 const CreateShop = async () => {
     const session = await auth()

@@ -1,5 +1,5 @@
 
-import { auth } from "@/lib/auth";
+import { auth } from "@/app/api/auth/[...nextauth]/route";
 import dbConnect, { collectionNameObj } from "@/lib/dbConnect";
 import { ObjectId } from "mongodb";
 
