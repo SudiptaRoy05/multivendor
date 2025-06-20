@@ -9,6 +9,7 @@ import { useRouter } from "next/navigation"
 import toast from "react-hot-toast"
 import { Eye, EyeOff } from "lucide-react"
 import SocialLogin from "./SocialLogin"
+import getUser from "@/app/action/auth/getUser"
 
 const LoginForm = () => {
     const [email, setEmail] = useState("")
@@ -51,6 +52,8 @@ const LoginForm = () => {
             setIsLoading(false)
         }
     }
+   
+
 
     const handleGoogleLogin = async () => {
         try {

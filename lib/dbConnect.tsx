@@ -13,7 +13,8 @@ let cachedClient: MongoClient | null = globalThis.mongoClient || null;
 
 export const collectionNameObj = {
     userCollection: "users",
-    shopCollection: "shops"
+    shopCollection: "shops",
+    productCollection : "Products"
 
 } as const;
 

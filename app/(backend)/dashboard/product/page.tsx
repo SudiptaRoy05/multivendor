@@ -1,6 +1,7 @@
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { Button } from "@/components/ui/button";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import Link from "next/link";
 
 export default function ProductsPage() {
     const products = [
@@ -29,7 +30,9 @@ export default function ProductsPage() {
         <div className="container mx-auto p-4">
             <div className="flex justify-between items-center mb-4">
                 <h2 className="text-2xl font-bold">Products</h2>
-                <Button className="bg-red-500 text-white">+ Add Product</Button>
+                <Link href="/dashboard/addproduct">
+                    <Button className="bg-red-500 text-white">+ Add Product</Button>
+                </Link>
             </div>
             <div className="flex gap-4 mb-4">
                 <div className="w-1/3">

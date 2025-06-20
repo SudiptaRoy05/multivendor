@@ -1,7 +1,6 @@
 'use server'
 
 import dbConnect, { collectionNameObj } from "@/lib/dbConnect"
-import { ObjectId } from "mongodb"
 
 export interface Shop extends Record<string, unknown> {
   name: string

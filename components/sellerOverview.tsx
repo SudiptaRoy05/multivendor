@@ -10,11 +10,12 @@ type OverWiewProps = {
 };
 
 export default function SellerOverview({ user }: OverWiewProps) {
+
     return (
         <div className="p-6 space-y-6">
             {/* Welcome Message */}
             <div>
-            <h1 className="text-2xl font-bold">Welcome back, {user?.name}!</h1>
+                <h1 className="text-2xl font-bold">Welcome back, {user?.name}!</h1>
                 <p className="text-muted-foreground mt-1">
                     You've made <span className="font-semibold">$2,450</span> today.
                 </p>

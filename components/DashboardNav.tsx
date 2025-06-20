@@ -11,10 +11,9 @@ import {
     SelectContent,
     SelectItem,
 } from "@/components/ui/select";
-// import { WithId } from "mongodb";
 
 type DashboardNavProps = {
-    user: { name?: string; email?: string; } | null;
+    user: { name?: string; email?: string; role?: string; } | null;
 };
 
 export default function DashboardNavbar({ user }: DashboardNavProps) {
