@@ -47,7 +47,7 @@ export default async function addProduct({ product }: AddProductParams) {
 
         return {
             success: true,
-            insertedId: result.insertedId,
+            insertedId: result.insertedId.toString(), 
         };
     } catch (error) {
         console.error("Failed to add product:", error);
