@@ -1,4 +1,5 @@
-import { auth } from "@/auth";
+
+import { auth } from "@/lib/auth";
 import dbConnect, { collectionNameObj } from "@/lib/dbConnect";
 import { ObjectId } from "mongodb";
 

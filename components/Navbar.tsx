@@ -5,8 +5,8 @@ import { Sheet, SheetTrigger, SheetContent } from "@/components/ui/sheet"
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuSeparator, DropdownMenuTrigger } from "@/components/ui/dropdown-menu"
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import { ModeToggle } from "./toggle-btn"
-import { auth, signOut } from "@/auth"
 import NavLink from "./NavLink"
+import {  auth, signIn, signOut } from "@/lib/auth"
 
 const Navbar = async () => {
     const session = await auth();
@@ -20,7 +20,7 @@ const Navbar = async () => {
             .join('')
             .toUpperCase()
     }
-
+signIn
     return (
         <nav className="sticky top-0 z-50 w-full border-b bg-background/80 backdrop-blur">
             <div className="container mx-auto flex items-center justify-between px-4 py-4">
